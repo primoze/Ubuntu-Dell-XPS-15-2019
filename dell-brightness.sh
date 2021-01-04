@@ -24,7 +24,8 @@ fi
 PERCENT=`echo "$VAL / $MAX" | bc -l`
 export XAUTHORITY=/home/user/.Xauthority  # CHANGE "user" TO YOUR USER
 export DISPLAY=:0.0
+export DISPLAYNAME=$(xrandr --listmonitors | awk '$1 == "0:" {print $4}')
 
-echo "xrandr --output eDP-1-1 --brightness $PERCENT" > /tmp/xps-brightness.log
-xrandr --output eDP-1-1 --brightness $PERCENT
+echo "xrandr --output ${DISPLAYNAME} --brightness $PERCENT" > /tmp/xps-brightness.log
+xrandr --output ${DISPLAYNAME} --brightness $PERCENT
 echo $VAL > "$BR_DIR/brightness"
